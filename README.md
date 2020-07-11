@@ -28,18 +28,9 @@ $ rvm --ruby-version use 2.7.1@recipes_viewer
 # initialize git
 $ git init
 $ git add .
-$ git commit -m 'CHORE: initial commit with new rails api app and initial gems'
+$ git commit -m 'CHORE: initial commit with new rails app and initial gems'
 $ git remote add origin git@github.com:MohamedBrary/recipes_viewer.git
 $ git push -u origin master
-```
-
-### Generating Models
-
-This application won't have models in first version, but will just make use of the scaffold generator, and then remove the unwanted files.
-
-```sh
-# generate scaffold for recipes to make use of the generated routes and views
-rails g scaffold Recipe title image tags description chef_name
 ```
 
 ### Gems
@@ -56,6 +47,15 @@ gem 'bootstrap-generators' # to generate views using bootstrap
 ```sh
 $ rake haml:erb2haml
 $ rails generate bootstrap:install --template-engine=haml
+```
+
+### Generating Models
+
+This application won't have models in first version, but will just make use of the scaffold generator, and then remove the unwanted files.
+
+```sh
+# generate scaffold for recipes to make use of the generated routes and views
+rails g scaffold Recipe title image tags description chef_name
 ```
 
 #### Contentful
