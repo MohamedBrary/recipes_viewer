@@ -15,11 +15,16 @@ $ rvm use --create 2.7.1@recipes_viewer
 # install latest rails into the blank gemset
 $ gem install rails -v 6.0.3
 
+# as a good practice is recommended to install webpack and webpack-dev-server locally, more info [here](https://webpack.js.org/guides/installation/).
+yarn add webpack webpack-dev-server webpack-cli --dev
+
 # Creates new rails app "recipes_viewer"
 # -d mysql: defining database (other options: mysql, oracle, postgresql, sqlite3, frontbase)
 # -T to skip generating test folder and files (in case of planning to use rspec)
 # --api to create an API only application
 $ rails new recipes_viewer -d postgresql
+
+$ bundle exec rails webpacker:install
 
 # go into the new project directory and create a .ruby-version and .ruby-gemset for the project
 $ cd recipes_viewer
@@ -49,15 +54,6 @@ $ rake haml:erb2haml
 $ rails generate bootstrap:install --template-engine=haml
 ```
 
-### Generating Models
-
-This application won't have models in first version, but will just make use of the scaffold generator, and then remove the unwanted files.
-
-```sh
-# generate scaffold for recipes to make use of the generated routes and views
-rails g scaffold Recipe title image tags description chef_name
-```
-
 #### Contentful
 
 In first version, I would use ['contentful' gem](https://www.contentful.com/developers/docs/ruby/tutorials/create-your-own-rails-app/) as a view helper.
@@ -67,19 +63,33 @@ If I have time I may play with graphql or active_resource, but for first version
 gem 'contentful'
 ```
 
-#### Cheerful Console
+#### Utilities
+
+##### Cheerful console and environment variables gems
 
 ```ruby
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
-  # more colorful console gems
+  # More colorful console gems
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'pry-byebug'
+
+  # Handling env variables
+  gem 'dotenv-rails'
 end
+```
+
+### Generating Models
+
+This application won't have models in first version, but will just make use of the scaffold generator, and then remove the unwanted files.
+
+```sh
+# generate scaffold for recipes to make use of the generated routes and views
+rails g scaffold Recipe title image tags description chef_name
 ```
 
 ### Deploy to Heroku
