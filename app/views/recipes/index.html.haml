@@ -1,0 +1,17 @@
+%h1 Listing Recipes
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th Image
+      %th
+
+  %tbody
+    - @recipes.each do |recipe|
+      %tr
+        %td= recipe.title
+        %td= image_tag(recipe.image, size: '30', alt: recipe.image)
+        %td= link_to('Show', "recipes/#{recipe.id}")
+
+%br

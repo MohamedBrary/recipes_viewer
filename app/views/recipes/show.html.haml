@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @recipe.title
+%p
+  %b Image:
+  = image_tag(@recipe.image, size: '300', alt: @recipe.image)
+%p
+  %b Tags:
+  = @recipe.tags
+%p
+  %b Description:
+  = @recipe.description
+%p
+  %b Chef Name:
+  = @recipe.chef_name
+
+= link_to 'Back', recipes_path
