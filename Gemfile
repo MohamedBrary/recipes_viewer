@@ -67,6 +67,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Using haml and bootstrap for simple views
 gem 'haml-rails'
 gem 'bootstrap-generators' # to generate views using bootstrap
+gem 'will_paginate-bootstrap4' # pagination but with bootstrap touch
 
 # To consume contentful API
 gem 'contentful'

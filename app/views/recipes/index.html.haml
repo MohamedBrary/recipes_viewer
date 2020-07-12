@@ -1,7 +1,7 @@
-%h1 Listing Recipes
+%h1= "Listing #{@recipes.count} out of #{@recipes.total_entries} Recipes"
 
-%table
-  %thead
+%table.table.table-striped
+  %thead.thead-dark
     %tr
       %th Title
       %th Image
@@ -11,7 +11,9 @@
     - @recipes.each do |recipe|
       %tr
         %td= recipe.title
-        %td= image_tag(recipe.image, size: '30', alt: recipe.image)
+        %td= image_tag(recipe.image, size: '90', alt: recipe.image)
         %td= link_to('Show', "recipes/#{recipe.id}")
 
 %br
+
+= will_paginate(@recipes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer)

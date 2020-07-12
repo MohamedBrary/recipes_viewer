@@ -1,19 +1,14 @@
 %p#notice= notice
 
-%p
-  %b Title:
-  = @recipe.title
-%p
-  %b Image:
-  = image_tag(@recipe.image, size: '300', alt: @recipe.image)
-%p
-  %b Tags:
-  = @recipe.tags
-%p
-  %b Description:
-  = @recipe.description
-%p
-  %b Chef Name:
-  = @recipe.chef_name
+%table
+  %td
+    - [:title, :description, :chef_name, :tags].each do |attr|
+      - if @recipe.send(attr).present?
+        %p
+          %b= "#{attr.to_s.titleize}:"
+          = @recipe.send(attr)
+  %td
+    %p
+      = image_tag(@recipe.image, size: '300', alt: @recipe.image)
 
 = link_to 'Back', recipes_path

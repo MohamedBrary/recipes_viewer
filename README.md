@@ -1,5 +1,21 @@
 ## Creating RecipesViewer Rails Project
 
+### Table of Contents
+
+- [Creating RecipesViewer Rails Project](#creating-recipesviewer-rails-project)
+  * [Initialization](#initialization)
+  * [Gems](#gems)
+    + [Haml and Bootstrap](#haml-and-bootstrap)
+    + [Utilities](#utilities)
+      - [Cheerful console and environment variables gems](#cheerful-console-and-environment-variables-gems)
+      - [Sprockets issue with Rails 6](#sprockets-issue-with-rails-6)
+    + [Contentful](#contentful)
+  * [Generating Models](#generating-models)
+  * [Deploy to Heroku](#deploy-to-heroku)
+  * [Commentary](#commentary)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 ### Initialization
 Based on this [gist](https://gist.github.com/MohamedBrary/12465abb009d5dbeadeb8cde9adb30b5) .
 ```sh
@@ -47,20 +63,12 @@ Using Haml and Bootstrap to have simple nice looking views
 ```ruby
 gem 'haml-rails'
 gem 'bootstrap-generators' # to generate views using bootstrap
+gem 'will_paginate-bootstrap4' # pagination but with bootstrap touch
 ```
 
 ```sh
 $ rake haml:erb2haml
 $ rails generate bootstrap:install --template-engine=haml
-```
-
-#### Contentful
-
-In first version, I would use ['contentful' gem](https://www.contentful.com/developers/docs/ruby/tutorials/create-your-own-rails-app/) as a view helper.
-If I have time I may play with graphql or active_resource, but for first version let's stick to the simplest quickest way.
-
-```ruby
-gem 'contentful'
 ```
 
 #### Utilities
@@ -83,9 +91,26 @@ group :development, :test do
 end
 ```
 
+##### Sprockets issue with Rails 6
+
+I had to use this specific version, to solve an issue with assets compiling.
+
+```ruby
+gem 'sprockets', '~> 3.7.2'
+```
+
+#### Contentful
+
+In the first version, I would use ['contentful' gem](https://www.contentful.com/developers/docs/ruby/tutorials/create-your-own-rails-app/) as a view helper.
+If I have time I may play with graphql or active_resource, but for the first version let's stick to the simplest quickest way.
+
+```ruby
+gem 'contentful'
+```
+
 ### Generating Models
 
-This application won't have models in first version, but will just make use of the scaffold generator, and then remove the unwanted files.
+This application won't have models in the first version, but will just make use of the scaffold generator, and then remove the unwanted files.
 
 ```sh
 # generate scaffold for recipes to make use of the generated routes and views
@@ -98,10 +123,13 @@ You need first to have an account on [Heroku](https://signup.heroku.com/?c=70130
 
 ```sh
 # Creating new Heroku app named recipes_viewer
-$ heroku create recipes_viewer
+$ heroku create recipes-viewer
 
 # Deploy application
 $ git push heroku master
+
+# Setting ENV variables
+heroku config:set CONTENTFUL_ACCESS_TOKEN='XXXXXX' CONTENTFUL_SPACE_ID='XX'
 
 # To open heroku app
 $ heroku open
@@ -111,3 +139,12 @@ $ heroku logs --tail
 $ heroku run rails console
 
 ```
+
+**Click [here](https://recipes-viewer.herokuapp.com/) to open the heroku app.**
+
+### Commentary
+
+- I wanted to use Rails 6, and had some issues with sprockets verions and webpack usage
+- I was excited about using Contentful, I used the simplest way of integrating with it, but if I had more time, I would have played with GraphQL and ActiveResource a bit, as I haven't used them before
+- **TODO:** I usually use wrappers (in /lib) for any 3rd party integration, the rule of thumb is, when you have to change the 3rd party integration, you don't change the core app code. So the class `Recipe` would be dealing with the abstract wrapper only, without knowledge of the underlying 3rd party service. (like in this [example](https://github.com/MohamedBrary/rails5-api-integration) repository)
+- **TODO:** I am not a fan of adding tests for the 3rd party service also, a ping dashboard would be sufficient. We need only to cover our own code, not external services or libraries.
