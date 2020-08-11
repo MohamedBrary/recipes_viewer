@@ -1,14 +1,18 @@
 %p#notice= notice
 
-%table
-  %td
-    - [:title, :description, :chef_name, :tags].each do |attr|
-      - if @recipe.send(attr).present?
-        %p
-          %b= "#{attr.to_s.titleize}:"
-          = @recipe.send(attr)
-  %td
-    %p
-      = image_tag(@recipe.image, size: '300', alt: @recipe.image)
+- if @recipe.present?
+  %table
+    %td
+      - [:title, :description, :chef_name, :tags].each do |attr|
+        - if @recipe.send(attr).present?
+          %p
+            %b= "#{attr.to_s.titleize}:"
+            = @recipe.send(attr)
+    %td
+      %p
+        = image_tag(@recipe.image, size: '300', alt: @recipe.image)
+
+- else
+  %p Sorry, we can't find this recipe!
 
 = link_to 'Back', recipes_path

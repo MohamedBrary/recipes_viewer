@@ -15,7 +15,9 @@ class RecipesController < ApplicationController
   private
 
   def page_param
-    (params[:page] || 1).to_i
+    raise Exceptions::BadRequest if params[:page].present? && params[:page].to_i <= 0
+
+    (params[:page].presence || 1).to_i
   end
 
 end

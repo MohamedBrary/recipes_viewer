@@ -91,9 +91,9 @@ group :development, :test do
 end
 ```
 
-##### Sprockets issue with Rails 6
+##### Sprockets and webpack issues with Rails 6
 
-I had to use this specific version, to solve an issue with assets compiling.
+I had to use this specific version, to solve an issue with assets compiling. Also the application should be on the same drive as the webpack.
 
 ```ruby
 gem 'sprockets', '~> 3.7.2'
@@ -144,7 +144,8 @@ $ heroku run rails console
 
 ### Commentary
 
-- I wanted to use Rails 6, and had some issues with sprockets verions and webpack usage
+- I wanted to use Rails 6, and had some issues with sprockets version and webpack usage
 - I was excited about using Contentful, I used the simplest way of integrating with it, but if I had more time, I would have played with GraphQL and ActiveResource a bit, as I haven't used them before
-- **TODO:** I usually use wrappers (in /lib) for any 3rd party integration, the rule of thumb is, when you have to change the 3rd party integration, you don't change the core app code. So the class `Recipe` would be dealing with the abstract wrapper only, without knowledge of the underlying 3rd party service. (like in this [example](https://github.com/MohamedBrary/rails5-api-integration) repository)
+- I usually use wrappers (in /lib) for any 3rd party integration, the rule of thumb is, when you have to change the 3rd party integration, you don't change the core app code. So the class `Recipe` is dealing with the abstract wrapper only, without knowledge of the underlying 3rd party services. (like in this [example](https://github.com/MohamedBrary/rails5-api-integration) repository)
+- The current integration setup is an overkill for the requirements of this application, but this serves as a template repository (check the commit message for details)
 - **TODO:** I am not a fan of adding tests for the 3rd party service also, a ping dashboard would be sufficient. We need only to cover our own code, not external services or libraries.
