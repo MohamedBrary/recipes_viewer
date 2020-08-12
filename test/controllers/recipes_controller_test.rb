@@ -3,17 +3,17 @@ require 'test_helper'
 class RecipesControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     # stub the RecipesProvider calls, as they are tested separately
-    Recipe.expects(:all).returns(paginated_recipes)
+    RecipeCacheService.expects(:list).returns(paginated_recipes)
     get recipes_url
 
     assert_response :success
   end
 
   test 'should show recipe' do
-    @recipe = recipes.first
+    recipe = recipes.first
     # stub the RecipesProvider calls, as they are tested separately
-    Recipe.expects(:find).returns(@recipe)
-    get recipe_url(@recipe.id)
+    RecipeCacheService.expects(:find).returns(recipe)
+    get recipe_url(recipe.id)
 
     assert_response :success
   end

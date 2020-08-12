@@ -16,6 +16,7 @@ module RecipesViewer
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.eager_load_paths += Dir["#{config.root}/app/services/**/*.rb"]
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.eager_load_paths += Dir["#{config.root}/lib/**/*.rb"]
   end

@@ -6,7 +6,6 @@ class Recipe
 
   class << self
 
-    # TODO check caching options
     def all(per_page: 3, page: 1)
       RecipesProvider.from_default.list(per_page: per_page, page: page)
     end
@@ -31,7 +30,9 @@ class Recipe
         recipes << recipe
       end
 
-      @all_samples = recipes
+      @all_samples = WillPaginate::Collection.create(1, recipes.count, recipes.count) do |pager|
+        pager.replace(recipes)
+      end
     end
 
   end

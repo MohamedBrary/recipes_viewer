@@ -1,15 +1,17 @@
 class RecipesController < ApplicationController
+  PER_PAGE = 3
+  PAGE = 1
 
   # GET /recipes
   # GET /recipes.json
   def index
-    @recipes = Recipe.all(page: page_param)
+    @recipes = RecipeCacheService.list(per_page: per_page_param, page: page_param)
   end
 
   # GET /recipes/1
   # GET /recipes/1.json
   def show
-    @recipe = Recipe.find(params[:id])
+    @recipe = RecipeCacheService.find(params[:id])
   end
 
   private
@@ -17,7 +19,13 @@ class RecipesController < ApplicationController
   def page_param
     raise Exceptions::BadRequest if params[:page].present? && params[:page].to_i <= 0
 
-    (params[:page].presence || 1).to_i
+    (params[:page].presence || PAGE).to_i
+  end
+
+  def per_page_param
+    raise Exceptions::BadRequest if params[:per_page].present? && params[:per_page].to_i <= 0
+
+    (params[:per_page].presence || PER_PAGE).to_i
   end
 
 end
